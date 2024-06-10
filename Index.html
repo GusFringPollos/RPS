@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .hide {
+        display: none;
+      }
+
+      #gift-box {
+        font-size: 5em;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      let humanScore = 0,
+        computerScore = 0;
+      let getComputerChoice = () => {
+        options = ["rock", "paper", "scissors"];
+        return options[Math.floor(Math.random() * 3)];
+      };
+      let getHumanChoice = () => {
+        options = ["rock", "paper", "scissors"];
+        let humanChoice = prompt(
+          '"rock", "paper" or "scissors"',
+          ""
+        ).toLowerCase();
+        if (options.includes(humanChoice)) {
+          return humanChoice;
+        } else {
+          alert('Only "rock", "paper", or "scissors".');
+        }
+      };
+      let playRound = (humanChoice, computerChoice) => {
+        if (humanChoice === "paper" && computerChoice === "rock") {
+          alert("You win! Paper beats Rock.");
+          humanScore += 1;
+        } else if (humanChoice === "rock" && computerChoice === "paper") {
+          alert("You lose! Paper beats Rock.");
+          computerScore += 1;
+        } else if (humanChoice === "rock" && computerChoice === "scissors") {
+          alert("You win! Rock beats Scissors.");
+          humanScore += 1;
+        } else if (humanChoice === "scissors" && computerChoice === "rock") {
+          alert("You lose! Rock beats Scissors.");
+          computerScore += 1;
+        } else if (humanChoice === "scissors" && computerChoice === "paper") {
+          alert("You win! Scissors beats paper.");
+          humanScore += 1;
+        } else if (humanChoice === "paper" && computerChoice === "Scissors") {
+          alert("You lose! Scissors beats paper.");
+          computerScore += 1;
+        } else {
+          if (humanChoice === computerChoice) {
+            alert("It's a tie!");
+          }
+        }
+      };
+      let playGame = () => {
+        for (let round = 0; round < 5; round++) {
+          playRound(getHumanChoice(), getComputerChoice());
+        }
+        if (humanScore > computerScore) {
+          return alert(`You won! 
+You = ${humanScore} points 
+Computer = ${computerScore} points`);
+        }
+        return alert(`You lose!
+You = ${humanScore} points
+Computer = ${computerScore} points`);
+      };
+      playGame();
+    </script>
+  </body>
+</html>
