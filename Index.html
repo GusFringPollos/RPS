@@ -6,28 +6,25 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="menu">
-      <button class="rock">Rock</button>
-      <button class="paper">Paper</button>
-      <button class="scissors">Scissors</button>
+    <div id="menu">
+      <button id="rock">Rock</button>
+      <button id="paper">Paper</button>
+      <button id="scissors">Scissors</button>
     </div>
-    <div class="scores"></div>
+    <div id="scores"></div>
+    <div id="winner"></div>
+    <button id="reset">Reset</button>
     <script>
       let humanScore = 0,
         computerScore = 0;
+      let scores = document.querySelector("#scores");
+      let winner = document.querySelector("#winner");
+      let menu = document.querySelector("#menu");
+      let reset = document.querySelector("#reset");
       let getComputerChoice = () => {
-        options = ["rock", "paper", "scissors"];
+        let options = ["rock", "paper", "scissors"];
         return options[Math.floor(Math.random() * 3)];
       };
-      // let getHumanChoice = () => {
-      //   options = ["rock", "paper", "scissors"];
-      //   let humanChoice = prompt('"rock", "paper" or "scissors"').toLowerCase();
-      //   if (options.includes(humanChoice)) {
-      //     return humanChoice;
-      //   } else {
-      //     alert('Only "rock", "paper", or "scissors".');
-      //   }
-      // };
       let playRound = (humanChoice, computerChoice) => {
         if (
           (humanChoice === "paper" && computerChoice === "rock") ||
@@ -42,45 +39,54 @@
         ) {
           computerScore += 1;
         }
-        // Check for a tie
-        if (humanScore === computerScore) {
-          return; // If it's a tie, do not update the scores
-        }
-        // If it's not a tie, update the scores
-        updateScores();
-      };
 
-      let updateScores = () => {
-        let scores = document.querySelector(".scores");
+        console.log(`You = ${humanScore}, PC = ${computerScore}`);
         scores.textContent = `You = ${humanScore}, PC = ${computerScore}`;
+
+        if (humanScore === 5 || computerScore === 5) {
+          if (humanScore === 5) {
+            winner.textContent = `You won!`;
+          } else {
+            winner.textContent = `You lose!`;
+          }
+
+          humanScore = 0;
+          computerScore = 0;
+        }
       };
-      let menu = document.querySelector(".menu");
 
       let playGame = () => {
         menu.addEventListener("click", (event) => {
-          switch (event.target.className) {
+          let computerChoice;
+          switch (event.target.getAttribute("id")) {
             case "rock":
-              let computerChoiceRock = getComputerChoice();
-              playRound("rock", computerChoiceRock);
+              computerChoice = getComputerChoice();
+              playRound("rock", computerChoice);
               console.log("rock");
-              console.log(computerChoiceRock);
+              console.log(computerChoice);
               break;
             case "paper":
-              let computerChoicePaper = getComputerChoice();
-              playRound("paper", computerChoicePaper);
+              computerChoice = getComputerChoice();
+              playRound("paper", computerChoice);
               console.log("paper");
-              console.log(computerChoicePaper);
+              console.log(computerChoice);
               break;
             case "scissors":
-              let computerChoiceScissors = getComputerChoice();
-              playRound("scissors", computerChoiceScissors);
+              computerChoice = getComputerChoice();
+              playRound("scissors", computerChoice);
               console.log("scissors");
-              console.log(computerChoiceScissors);
+              console.log(computerChoice);
               break;
           }
         });
       };
 
+      reset.addEventListener("click", () => {
+        humanScore = 0;
+        computerScore = 0;
+        scores.textContent = "";
+        console.clear();
+      });
       playGame();
     </script>
   </body>
